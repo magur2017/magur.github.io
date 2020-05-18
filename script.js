@@ -1,57 +1,52 @@
-var button = document.getElementById("enter");
+// jQuery animations
+$(document).ready(function() {
+	// container animation
+	$(".container").addClass("animated fadeIn");
+ 	// h1 animation
+ 	$(".mainHeader").addClass("animated bounceInRight");
+ 	// borderBottom (3 border colors after h1) animation
+ 	$(".borderBottom").addClass("animated bounceInLeft");
+ 	// paragraph after h1 animation
+ 	$(".guideText").addClass("animated pulse");
+});
+
+// shopping list code starts now
+var button = document.getElementById("add");
 var input = document.getElementById("userinput");
-const ul = document.querySelector("ul");
-const li = document.getElementsByTagName("li");
-const deleteButton = document.getElementsByTagName("i");
-var clearButton = document.getElementById("clear");
-
-function strikeThrough(e) {
-	if (e.target.tagName === "LI") {
-		e.target.classList.toggle("done");
-	}
-}
-
-function createDeleteButtonIcon() {
-	for (var ind = 0; ind < li.length; ind++) {
-		var createDeleteButton = document.createElement("i");
-		var createDiv = document.getElementsByClassName("div");
-		console.log(createDiv);
-		createDeleteButton.classList.add("fa", "fa-trash");
-		createDiv[ind].appendChild(createDeleteButton);
-	}
-}
-
-function deleteNodeOnClick(e) {
-	var trash = document.querySelectorAll("i");
-	for (var ind = 0; ind < trash.length; ind++) {
-		console.log(e);
-		this.parentNode.parentNode.remove();
-	}
-}
+var ul = document.querySelector(".shopList");
 
 function inputLength() {
 	return input.value.length;
 }
 
 function createListElement() {
-	var divClassWrapper = document.createElement("div");
-	divClassWrapper.classList.add("li-wrapper");
-
 	var li = document.createElement("li");
-	var createDiv = document.createElement("div");
-
+	// adds style to the list items
+	li.classList.add("listItem");
+	li.addEventListener("click", markListItem);
 	li.appendChild(document.createTextNode(input.value));
-	divClassWrapper.appendChild(li);
-	divClassWrapper.appendChild(createDiv);
-	ul.appendChild(divClassWrapper);
-
+	ul.appendChild(li);
 	input.value = "";
-	createDiv.classList.add("div");
-	var createDeleteButton = document.createElement("i");
-	createDeleteButton.classList.add("fa", "fa-trash");
-	createDiv.appendChild(createDeleteButton);
-	deleteParentNodeOnClick();
-}
+
+	// creates the line-through
+	function markListItem() {
+		li.classList.toggle("done");
+	}
+
+	// create a delete button
+	var btnDel = document.createElement("button");
+	// style for the delete button
+	btnDel.classList.add("deleteBtn");
+	btnDel.appendChild(document.createTextNode("X"));
+	li.appendChild(btnDel);
+	btnDel.addEventListener("click", deleteListItem);
+
+	// adds display: none to the button
+	function deleteListItem() {
+		li.classList.add("delete");
+	}
+} 
+// end of createListElement functi0n
 
 function addListAfterClick() {
 	if (inputLength() > 0) {
@@ -65,19 +60,6 @@ function addListAfterKeypress(event) {
 	}
 }
 
-function deleteParentNodeOnClick() {
-	for (var i = 0; i < deleteButton.length; i++) {
-		deleteButton[i].addEventListener("click", deleteNodeOnClick);
-	}
-}
-
-function clearList() {
-	ul.innerHTML = "";
-}
-
-clearButton.addEventListener("click", clearList);
-ul.addEventListener("click", strikeThrough);
 button.addEventListener("click", addListAfterClick);
+
 input.addEventListener("keypress", addListAfterKeypress);
-createDeleteButtonIcon();
-deleteParentNodeOnClick();

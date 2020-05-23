@@ -82,6 +82,7 @@ a{
   padding: 0px 3px 0px 3px;
   color: #fff;
   cursor: pointer;
+  float: right;
 }
 
 @media (max-width: 600px) {
